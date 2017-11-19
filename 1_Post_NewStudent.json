@@ -1,0 +1,12 @@
+//  Content-Type: application/json
+
+{
+    "firstname":"Harry",
+    "lastname":"Potter",
+    "email":"hpotter@hogwarts.com",
+    "institution":"Hogwarts School of Witchcraft and Wizardry",
+    "course":"Defense Against the Dark Arts",
+    "instructor":"Severus Snape",
+    "subscription_type":"Inactive",
+    "subscription_level":"None"
+}
