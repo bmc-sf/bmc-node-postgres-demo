@@ -47,13 +47,13 @@ client.connect();
 //app.get('/', (req, res) => res.send('Hello......node.js server'));
 app.get('/', function (req, res){
 	res.writeHead(200, { 'Content-Type': 'text/html' });
-	res.write('<h1>DEMO:  Heroku Node.js, PostgreSQL and Heroku Connect app v1.1</h1><br /><br /> <strong>View All students:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/students">http:\/\/bmc-node-postgres-demo.herokuapp.com\/students</a></br><strong>View Claire:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry">http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry</a></br><strong>Insert Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert">http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert</a></br><strong>Update Student Better:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update</a></br> <strong>Update Student Free:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Delete Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete">http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete</a></br></br></br></br></br></br><strong>Admin:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/admin">admin</a></br></br>');
+	res.write('<h1>DEMO:  Heroku Node.js, PostgreSQL and Heroku Connect app v1.2</h1><br /><br /> <strong>View All students:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/students">http:\/\/bmc-node-postgres-demo.herokuapp.com\/students</a></br><strong>View Claire:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry">http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry</a></br><strong>Insert Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert">http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert</a></br><strong>Update Student Better:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update</a></br> <strong>Update Student Free:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Delete Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete">http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete</a></br></br></br></br></br></br><strong>Admin:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/admin">admin</a></br></br>');
 	res.end();
 });
 
 // GET request runs SELECT * query
 app.get('/students', function(request, response) {
-	client.query("SELECT firstname, lastname, email, subscription_status__c FROM salesforce.user", function (err, result, fields) {
+	client.query("SELECT firstname__c, lastname__c, email__c, subscription_status__c FROM salesforce.student__c", function (err, result, fields) {
 		if (err) throw err;
         console.log("Results:");
  		console.log(result);
@@ -66,7 +66,7 @@ app.get('/students', function(request, response) {
 // GET request runs SELECT * query
 app.get('/harry', function(request, response) {
 //	client.query("SELECT * FROM users WHERE lastname = 'Boyle'", function (err, result, fields) {
-    client.query("SELECT firstname, lastname, email, subscription_status__c FROM salesforce.user  WHERE email = 'lboyle@example.com'", function (err, result, fields) {
+    client.query("SELECT firstname__c, lastname__c, email__c, subscription_status__c FROM salesforce.student__c  WHERE email__c = 'lboyle@example.com'", function (err, result, fields) {
 		if (err) throw err;
         console.log("Results:");
  		console.log(result);
@@ -78,7 +78,7 @@ app.get('/harry', function(request, response) {
 
 // GET request runs INSERT query
 app.get('/insert', function(request, response) {
-	  var sql = "INSERT INTO salesforce.user (firstname, lastname, email, subscription_status__c) VALUES ('Mace', 'Windu', 'mwindu@ral.com', 'Good')";
+	  var sql = "INSERT INTO salesforce.student__c (firstname__c, lastname__c, email__c, subscription_status__c) VALUES ('Mace', 'Windu', 'mwindu@ral.com', 'Good')";
 	  client.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log("1 record inserted");
@@ -90,7 +90,7 @@ app.get('/insert', function(request, response) {
 app.get('/update', function(request, response) {
 	  var value1 = '2';
 	  var value2 = '3';
-	  var sql = "UPDATE salesforce.user SET subscription_status__c = 'Best' WHERE email = 'lboyle@example.com'";
+	  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Best' WHERE email__c = 'lboyle@example.com'";
 	  client.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log("1 record inserted");
@@ -103,7 +103,7 @@ app.get('/update', function(request, response) {
 app.get('/update2', function(request, response) {
     var value1 = '2';
     var value2 = '3';
-    var sql = "UPDATE salesforce.user SET subscription_status__c = 'Good' WHERE email = 'lboyle@example.com'";
+    var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Good' WHERE email__c = 'lboyle@example.com'";
     client.query(sql, function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
@@ -114,7 +114,7 @@ app.get('/update2', function(request, response) {
 
 // GET request runs DELETE query
 app.get('/delete', function(request, response) {
-    var sql = "DELETE FROM salesforce.user WHERE lastname like '%Windu%'";
+    var sql = "DELETE FROM salesforce.student__c WHERE lastname__c like '%Windu%'";
      client.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log("1 record inserted");
@@ -139,7 +139,7 @@ app.post('/json', function(request, response) {
     console.log('JSON = ' + tmp);
 
     // Update Student
-    var sql = "UPDATE salesforce.user SET subscription_status__c = '"+jObj.subscription_status__c+"' WHERE email = '"+jObj.email+"'";
+    var sql = "UPDATE salesforce.student__c SET subscription_status__c = '"+jObj.subscription_status__c+"' WHERE email__c = '"+jObj.email+"'";
     console.log(sql);
     client.query(sql, function (err, result) {
       if (err) throw err;
