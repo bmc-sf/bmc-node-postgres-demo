@@ -138,8 +138,19 @@ app.post('/json', function(request, response) {
     var tmp = 'New Student:  ' + jObj.firstname + ' ' + jObj.lastname + ' ' + jObj.email;
     console.log('JSON = ' + tmp);
 
+    var mySubscriptionStatus;
+    if (jObj.subscription_status__c == "CNG-808-2018-GD-14D"){
+      mySubscriptionStatus = "Trial";
+    } else if (jObj.subscription_status__c == "CNG-808-2018-GD") {
+      mySubscriptionStatus = "Good";
+    } else if (jObj.subscription_status__c == "CNG-808-2018-BTR") {
+      mySubscriptionStatus = "Better";
+    } else if (jObj.subscription_status__c == "CNG-808-2018-BST") {
+      mySubscriptionStatus = "Best";
+    }
+
     // Update Student
-    var sql = "UPDATE salesforce.student__c SET subscription_status__c = '"+jObj.subscription_status__c+"' WHERE email__c = '"+jObj.email+"'";
+    var sql = "UPDATE salesforce.student__c SET subscription_status__c = '"+mySubscriptionStatus+"' WHERE email__c = '"+jObj.email+"'";
     console.log(sql);
     client.query(sql, function (err, result) {
       if (err) throw err;
