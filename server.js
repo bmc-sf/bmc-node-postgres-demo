@@ -1,5 +1,5 @@
 //	Node-Postgres-Demo
-//  Date:  11/19/17
+//  Date:  11/27/17
 
 //Imports
 var express = require("express");
@@ -22,29 +22,10 @@ const client = new Client({
 });
 client.connect();
 
-// MySQL DB Parameters - Heroku & ClearDB
-//var con = mysql.createConnection({
-//	host: env('DB_HOST', 'us-cdbr-iron-east-05.cleardb.net'),
-//	user: env('DB_USERNAME', 'b310795ff08cd3'),
-//	password: env('DB_PASSWORD', '24d90289'),
-//	database: env('DB_DATABASE', 'heroku_b344631383948cc')
-//  });
-
-// connect to DB
-    // con.connect(function(err) {
-    //     if (err) {
-    //         console.error('Error:- ' + err.stack);
-    //         return;
-    //     }
-     
-    //     //console.log('Connected Id:- ' + con.threadId);
-    // });
-
 // ------------------------------------------------
 // Express
 // ------------------------------------------------
 // GET request returns static text
-//app.get('/', (req, res) => res.send('Hello......node.js server'));
 app.get('/', function (req, res){
 	res.writeHead(200, { 'Content-Type': 'text/html' });
 	res.write('<h1>DEMO:  Heroku Node.js, PostgreSQL and Heroku Connect app v1.2</h1><br /><br /> <strong>View All students:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/students">http:\/\/bmc-node-postgres-demo.herokuapp.com\/students</a></br><strong>View Claire:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry">http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry</a></br><strong>Insert Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert">http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert</a></br><strong>Update Student Better:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update</a></br> <strong>Update Student Free:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Delete Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete">http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete</a></br></br></br></br></br></br><strong>Admin:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/admin">admin</a></br></br>');
@@ -65,7 +46,6 @@ app.get('/students', function(request, response) {
 
 // GET request runs SELECT * query
 app.get('/harry', function(request, response) {
-//	client.query("SELECT * FROM users WHERE lastname = 'Boyle'", function (err, result, fields) {
     client.query("SELECT firstname__c, lastname__c, email__c, subscription_status__c FROM salesforce.student__c  WHERE email__c = 'lboyle@example.com'", function (err, result, fields) {
 		if (err) throw err;
         console.log("Results:");
@@ -124,15 +104,9 @@ app.get('/delete', function(request, response) {
 });
 
 // Handle POST with JSON
-
-// Inactice, Trial, Good, Better, Best  subscription_status__c
+//      Inactive, Trial, Good, Better, Best  subscription_status__c
 app.post('/json', function(request, response) {
     var jsonData = request.body;
-
-    // var myStringResult = JSON.stringify(request.body);
-    // var myResult = JSON.parse(myStringResult);
-    // firstname = myResult.firstname;
-    // lastname = myResult.lastname;
     var jString = JSON.stringify(jsonData);
     var jObj = JSON.parse(jString);
     var tmp = 'New Student:  ' + jObj.firstname + ' ' + jObj.lastname + ' ' + jObj.email;
@@ -208,8 +182,6 @@ app.get('/loadData', function(request, response) {
 
 // Start Server
 var server = app.listen(process.env.PORT, function () {
-	//var host = server.address().address;
-	//var port = server.address().port;
 
  //Print Message To Console
  //console.log('Server running at http://%s:%s', host, port);
