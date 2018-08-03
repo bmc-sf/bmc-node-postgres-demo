@@ -8,6 +8,9 @@ const { Client } = require('pg');
 var http = require('http');
 var bodyParser = require('body-parser');
 
+// PATH
+var path = require('path');
+
 // Use Express
 var app = express()
 
@@ -58,7 +61,8 @@ app.get('/Demo', function (req, res){
 });
 
 app.get('/buttons', function (req, res){
-	res.sendFile('/demo.html');
+  //res.sendFile('./demo.html');
+  res.sendFile(path.join(__dirname + '/demo.html'));
 });
 
 // GET request runs SELECT * query
