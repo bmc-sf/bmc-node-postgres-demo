@@ -57,6 +57,10 @@ app.get('/Demo', function (req, res){
 	res.end();
 });
 
+app.get('/buttons', function (req, res){
+	res.sendFile("demo.html");
+});
+
 // GET request runs SELECT * query
 app.get('/students', function(request, response) {
 	client.query("SELECT firstname__c, lastname__c, email__c, subscription_status__c FROM salesforce.student__c", function (err, result, fields) {
