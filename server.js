@@ -58,7 +58,7 @@ app.get('/Demo', function (req, res){
 });
 
 app.get('/buttons', function (req, res){
-	res.sendFile('demo.html');
+	res.sendFile('/demo.html');
 });
 
 // GET request runs SELECT * query
