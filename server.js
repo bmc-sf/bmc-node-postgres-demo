@@ -1,5 +1,5 @@
 //	Node-Postgres-Demo
-//  Date:  11/19/17
+//  Date:  08/03/18
 
 //Imports
 var express = require("express");
@@ -36,7 +36,7 @@ client.connect();
     //         console.error('Error:- ' + err.stack);
     //         return;
     //     }
-     
+
     //     //console.log('Connected Id:- ' + con.threadId);
     // });
 
@@ -48,6 +48,12 @@ client.connect();
 app.get('/', function (req, res){
 	res.writeHead(200, { 'Content-Type': 'text/html' });
 	res.write('<h1>DEMO:  Heroku Node.js, PostgreSQL and Heroku Connect app v1.2</h1><br /><br /> <strong>View All students:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/students">http:\/\/bmc-node-postgres-demo.herokuapp.com\/students</a></br><strong>View Claire:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry">http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry</a></br><strong>Insert Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert">http:\/\/bmc-node-postgres-demo.herokuapp.com\/insert</a></br><strong>Update Student Better:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update</a></br> <strong>Update Student Free:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Delete Student:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete">http:\/\/bmc-node-postgres-demo.herokuapp.com\/delete</a></br></br></br></br></br></br><strong>Admin:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/admin">admin</a></br></br>');
+	res.end();
+});
+
+app.get('/Demo', function (req, res){
+	res.writeHead(200, { 'Content-Type': 'text/html' });
+	res.write('<h1>Eds DEMO:  Heroku Node.js, PostgreSQL and Heroku Connect app v1.3</h1><br/><br/><strong>Update Student Trial:  </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/updateTrial">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update</a></br> <strong>Update Student Good: </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/updateGood">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Update Student Better: </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/updateBetter">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Update Student Best:  </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/updateBest">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><strong>Update Student Inactive: </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/updateInactive">http:\/\/bmc-node-postgres-demo.herokuapp.com\/update2</a></br><hr><strong>View Claire:  </strong><ahref="http:\/\/bmc-node-postgres-demo.herokuapp.com\/claire">http:\/\/bmc-node-postgres-demo.herokuapp.com\/harry</a></br>');
 	res.end();
 });
 
@@ -64,7 +70,7 @@ app.get('/students', function(request, response) {
 });
 
 // GET request runs SELECT * query
-app.get('/harry', function(request, response) {
+app.get('/claire', function(request, response) {
 //	client.query("SELECT * FROM users WHERE lastname = 'Boyle'", function (err, result, fields) {
     client.query("SELECT firstname__c, lastname__c, email__c, subscription_status__c FROM salesforce.student__c  WHERE email__c = 'lboyle@example.com'", function (err, result, fields) {
 		if (err) throw err;
@@ -86,21 +92,21 @@ app.get('/insert', function(request, response) {
 	  });
 });
 
-// GET request runs UPDATE Paid query
-app.get('/update', function(request, response) {
+// GET request runs UPDATE "Trial" query
+app.get('/updateTrial', function(request, response) {
 	  var value1 = '2';
 	  var value2 = '3';
-	  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Best' WHERE email__c = 'lboyle@example.com'";
+	  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Trial' WHERE email__c = 'lboyle@example.com'";
 	  client.query(sql, function (err, result) {
 		if (err) throw err;
 		console.log("1 record inserted");
 		console.log(sql);
 	  });
-	  
+
 });
 
-// GET request runs UPDATE Free query
-app.get('/update2', function(request, response) {
+// GET request runs UPDATE "Good" query
+app.get('/updateGood', function(request, response) {
     var value1 = '2';
     var value2 = '3';
     var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Good' WHERE email__c = 'lboyle@example.com'";
@@ -109,7 +115,46 @@ app.get('/update2', function(request, response) {
       console.log("1 record inserted");
       console.log(sql);
     });
-    
+
+});
+
+// GET request runs UPDATE "Better" query
+app.get('/updateBetter', function(request, response) {
+  var value1 = '2';
+  var value2 = '3';
+  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Better' WHERE email__c = 'lboyle@example.com'";
+  client.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+    console.log(sql);
+  });
+
+});
+
+// GET request runs UPDATE "Best" query
+app.get('/updateBest', function(request, response) {
+  var value1 = '2';
+  var value2 = '3';
+  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Best' WHERE email__c = 'lboyle@example.com'";
+  client.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+    console.log(sql);
+  });
+
+});
+
+// GET request runs UPDATE "Inactive" query
+app.get('/updateInactive', function(request, response) {
+  var value1 = '2';
+  var value2 = '3';
+  var sql = "UPDATE salesforce.student__c SET subscription_status__c = 'Inactive' WHERE email__c = 'lboyle@example.com'";
+  client.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+    console.log(sql);
+  });
+
 });
 
 // GET request runs DELETE query
@@ -144,9 +189,9 @@ app.post('/json', function(request, response) {
     client.query(sql, function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
-      
+
     });
-    
+
     // Write Response
     response.set('Content-Type', 'application/json');
     response.write("You sent some data " + JSON.stringify(jsonData));
@@ -156,7 +201,7 @@ app.post('/json', function(request, response) {
 // ************************************************************************
 app.get('/admin', function (req, res){
 	res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('<h1>ADMIN:  node.js DB app</h1><br /><br /> <strong>Create DB:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/createDB">http:\/\/bmc-node-postgres-demo.herokuapp.com\/createDB</a></br><strong>Create Table:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/createTable">http:\/\/bmc-node-postgres-demo.herokuapp.com\/createTable</a></br><strong>Load Data:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/loadData">http:\/\/bmc-node-postgres-demo.herokuapp.com\/loadData</a></br></br>');    
+  res.write('<h1>ADMIN:  node.js DB app</h1><br /><br /> <strong>Create DB:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/createDB">http:\/\/bmc-node-postgres-demo.herokuapp.com\/createDB</a></br><strong>Create Table:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/createTable">http:\/\/bmc-node-postgres-demo.herokuapp.com\/createTable</a></br><strong>Load Data:  </strong><a href="http:\/\/bmc-node-postgres-demo.herokuapp.com\/loadData">http:\/\/bmc-node-postgres-demo.herokuapp.com\/loadData</a></br></br>');
   res.end();
 });
 
